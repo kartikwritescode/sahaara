@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -61,10 +61,11 @@ class EditProfileController extends GetxController {
   // PICK IMAGE (FilePicker)
   // ---------------------------------------------------------
   Future<void> pickImage() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (result != null && result.files.single.path != null) {
-      final file = File(result.files.single.path!);
+    if (pickedFile != null) {
+      final file = File(pickedFile.path);
       selectedImage.value = file;
       imagePreview.value = file.path;
     }

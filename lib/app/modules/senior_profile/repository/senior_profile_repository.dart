@@ -1,22 +1,25 @@
 import 'package:get/get.dart';
-import '../../../../data/models/senior_profile_model.dart';
-import '../../../../data/services/supabase_service.dart';
+import '../../../data/models/senior_profile_model.dart';
+import '../../../data/services/supabase_service.dart';
 
 class SeniorProfileRepository {
   final SupabaseService _supabase = Get.find<SupabaseService>();
 
-  Future<SeniorProfileModel?> fetchSeniorProfile(String id) async {
+  Future<SeniorProfileModel?> fetchSeniorProfile(String seniorId) async {
     try {
       final res = await _supabase.client
           .from('senior_profiles')
           .select()
-          .eq('id', id)
+          .eq('id', seniorId)
           .maybeSingle();
+
       if (res != null) {
         return SeniorProfileModel.fromJson(res);
       }
-    } catch (_) {}
-    return null;
+      return null;
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<bool> saveSeniorProfile(SeniorProfileModel profile) async {

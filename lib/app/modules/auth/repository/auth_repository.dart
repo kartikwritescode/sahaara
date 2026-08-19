@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
-import '../../../../data/services/supabase_service.dart';
+import '../../../data/services/supabase_service.dart';
 
 class AuthRepository {
   final SupabaseService _supabase = Get.find<SupabaseService>();
 
   Future<bool> signIn(String email, String password) async {
     try {
-      await _supabase.client.auth.signInWithPassword(email: email, password: password);
-      return true;
+      final res = await _supabase.client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      return res.session != null;
     } catch (_) {
       return false;
     }
@@ -20,14 +23,7 @@ class AuthRepository {
         password: password,
         data: {'full_name': fullName, 'role': role},
       );
-      if (res.user != null) {
-        await _supabase.client.from('profiles').insert({
-          'id': res.user!.id,
-          'role': role,
-          'full_name': fullName,
-        });
-      }
-      return true;
+      return res.user != null;
     } catch (_) {
       return false;
     }

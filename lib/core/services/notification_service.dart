@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Top-level background message handler for FCM.
@@ -11,7 +9,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint("📩 Background message received: ${message.messageId}");
-  // Note: Native side (MyFirebaseMessagingService.kt) also handles this.
 }
 
 class NotificationService {
@@ -44,7 +41,7 @@ class NotificationService {
     );
 
     await _localNotifications.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
 
@@ -77,16 +74,15 @@ class NotificationService {
 
   static Future<void> _showLocalNotification(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
 
     if (notification != null && !kIsWeb) {
       await _localNotifications.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        const NotificationDetails(
+        id: notification.hashCode,
+        title: notification.title,
+        body: notification.body,
+        notificationDetails: const NotificationDetails(
           android: AndroidNotificationDetails(
-            'default_channel', // Matches native side
+            'default_channel',
             'General Notifications',
             importance: Importance.max,
             priority: Priority.high,
@@ -100,14 +96,12 @@ class NotificationService {
 
   static void _onNotificationTapped(NotificationResponse response) {
     debugPrint("🖱️ Local notification tapped: ${response.payload}");
-    // Parse payload if needed and navigate
   }
 
   static void _handleNotificationClick(Map<String, dynamic> data) {
-    // Implementation for deep linking or navigation based on data
     final String? type = data['type'];
     if (type == 'chat') {
-      // Get.toNamed('/chat', arguments: data['chat_id']);
+      // Navigate to chat
     }
   }
 

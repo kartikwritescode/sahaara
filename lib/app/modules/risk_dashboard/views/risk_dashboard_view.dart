@@ -20,7 +20,7 @@ class RiskDashboardView extends GetView<RiskController> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final risk = controller.currentRisk.value;
+        final risk = controller.currentRisk;
         if (risk == null) {
           return const Center(child: Text('No risk score computed yet.'));
         }

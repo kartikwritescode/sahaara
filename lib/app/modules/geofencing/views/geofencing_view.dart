@@ -30,11 +30,12 @@ class GeofencingView extends GetView<GeofenceController> {
             markerId: const MarkerId('senior_loc'),
             position: controller.currentSeniorPos.value,
             infoWindow: const InfoWindow(title: 'Senior Location', snippet: 'Last ping 3 mins ago'),
-            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.HUE_RED),
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
         };
 
         final Set<Circle> circles = controller.geofences.map((g) {
+          if (g == null) return null;
           return Circle(
             circleId: CircleId(g.id),
             center: LatLng(g.centerLat, g.centerLng),
@@ -43,7 +44,7 @@ class GeofencingView extends GetView<GeofenceController> {
             strokeColor: AppColors.primary,
             fillColor: AppColors.primary.withOpacity(0.15),
           );
-        }).toSet();
+        }).whereType<Circle>().toSet();
 
         return Stack(
           children: [

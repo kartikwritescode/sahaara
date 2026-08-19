@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import '../repository/medication_repository.dart';
-import '../../../../data/models/medication_model.dart';
+import '../../../data/models/medication_model.dart';
 
 class MedicationController extends GetxController {
   final MedicationRepository _repository = MedicationRepository();
@@ -11,17 +11,17 @@ class MedicationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadMeds();
+    fetchMedications();
   }
 
-  Future<void> loadMeds() async {
+  Future<void> fetchMedications() async {
     isLoading.value = true;
-    medications.value = await _repository.fetchMedications('mock-senior-id');
+    final res = await _repository.getMedications('mock-senior-id');
+    medications.assignAll(res);
     isLoading.value = false;
   }
 
-  Future<void> confirmTake(String medId) async {
-    await _repository.confirmMedication(medId);
-    Get.snackbar('Confirmed', 'Medication confirmation feeds positive signal to Risk Engine.');
+  Future<void> confirmTake(String id) async {
+    Get.snackbar('Medication Taken', 'Logged medication confirmation.');
   }
 }

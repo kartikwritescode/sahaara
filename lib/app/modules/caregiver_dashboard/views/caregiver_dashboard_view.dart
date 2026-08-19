@@ -32,7 +32,7 @@ class CaregiverDashboardView extends GetView<CaregiverController> {
           itemCount: controller.seniors.length,
           itemBuilder: (context, index) {
             final senior = controller.seniors[index];
-            final int score = senior['risk_score'] ?? 0;
+            final int score = senior.riskScore;
 
             return Card(
               elevation: 3,
@@ -44,7 +44,7 @@ class CaregiverDashboardView extends GetView<CaregiverController> {
                   radius: 28,
                   backgroundColor: AppColors.primary.withOpacity(0.2),
                   child: Text(
-                    (senior['full_name'] as String? ?? 'S')[0],
+                    (senior.fullName.isNotEmpty ? senior.fullName : 'S')[0],
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppColors.primary),
                   ),
                 ),
@@ -52,7 +52,7 @@ class CaregiverDashboardView extends GetView<CaregiverController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      senior['full_name'] ?? 'Senior',
+                      senior.fullName.isNotEmpty ? senior.fullName : 'Senior',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     RiskStatusChip(score: score),
@@ -62,8 +62,8 @@ class CaregiverDashboardView extends GetView<CaregiverController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 6),
-                    Text('Relationship: ${senior['relationship']}'),
-                    Text('Last Activity: ${senior['last_active']}'),
+                    Text('Relationship: ${senior.relationship}'),
+                    Text('Last Activity: ${senior.lastActive}'),
                     const SizedBox(height: 12),
                     Row(
                       children: [

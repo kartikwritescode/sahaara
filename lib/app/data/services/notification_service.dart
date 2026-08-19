@@ -14,7 +14,9 @@ class NotificationService extends GetxService {
       iOS: initializationSettingsIOS,
     );
 
-    await _notificationsPlugin.initialize(initializationSettings);
+    await _notificationsPlugin.initialize(
+      settings: initializationSettings,
+    );
     return this;
   }
 
@@ -37,6 +39,12 @@ class NotificationService extends GetxService {
       iOS: DarwinNotificationDetails(),
     );
 
-    await _notificationsPlugin.show(id, title, body, details, payload: payload);
+    await _notificationsPlugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: details,
+      payload: payload,
+    );
   }
 }

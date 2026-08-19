@@ -1,29 +1,28 @@
 import 'package:get/get.dart';
-import '../../../../data/models/geofence_model.dart';
-import '../../../../data/services/supabase_service.dart';
+import '../../../data/models/geofence_model.dart';
+import '../../../data/services/supabase_service.dart';
 
 class GeofenceRepository {
   final SupabaseService _supabase = Get.find<SupabaseService>();
 
-  Future<List<GeofenceModel>> fetchGeofences(String seniorId) async {
+  Future<List<GeofenceModel>> getGeofences(String seniorId) async {
     try {
       final res = await _supabase.client
           .from('geofences')
           .select()
-          .eq('senior_id', seniorId);
-      return (res as List).map((g) => GeofenceModel.fromJson(g)).toList();
+          .eq('receiver_id', seniorId);
+      return (res as List).map((e) => GeofenceModel.fromJson(e)).toList();
     } catch (_) {
-      return [
-        GeofenceModel(
-          id: 'geo-1',
-          seniorId: seniorId,
-          name: 'Home Safety Zone',
-          centerLat: 37.7749,
-          centerLng: -122.4194,
-          radiusM: 500,
-          zoneType: 'home',
-        ),
-      ];
+      return [];
+    }
+  }
+
+  Future<bool> saveGeofence(GeofenceModel geofence) async {
+    try {
+      await _supabase.client.from('geofences').insert(geofence.toJson());
+      return true;
+    } catch (_) {
+      return false;
     }
   }
 }

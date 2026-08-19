@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../repository/geofence_repository.dart';
-import '../../../../data/models/geofence_model.dart';
+import '../../../data/models/geofence_model.dart';
 
 class GeofenceController extends GetxController {
   final GeofenceRepository _repository = GeofenceRepository();
@@ -18,7 +18,8 @@ class GeofenceController extends GetxController {
 
   Future<void> loadGeofences() async {
     isLoading.value = true;
-    geofences.value = await _repository.fetchGeofences('mock-senior-id');
+    final res = await _repository.getGeofences('mock-senior-id');
+    geofences.assignAll(res);
     isLoading.value = false;
   }
 }

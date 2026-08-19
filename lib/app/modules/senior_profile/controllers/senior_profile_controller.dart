@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import '../repository/senior_profile_repository.dart';
-import '../../../../data/models/senior_profile_model.dart';
-import '../../../../data/services/maps_service.dart';
+import '../../../data/models/senior_profile_model.dart';
+import '../../../data/services/maps_service.dart';
 
 class SeniorProfileController extends GetxController {
   final SeniorProfileRepository _repository = SeniorProfileRepository();
@@ -13,8 +13,8 @@ class SeniorProfileController extends GetxController {
   var wakeTime = '07:00 AM'.obs;
   var sleepTime = '10:00 PM'.obs;
   var homeAddress = '123 Peace Avenue, Green Park'.obs;
-  var homeLat = 37.7749.obs;
-  var homeLng = -122.4194.obs;
+  final RxDouble homeLat = 37.7749.obs;
+  final RxDouble homeLng = (-122.4194).obs;
 
   @override
   void onInit() {
