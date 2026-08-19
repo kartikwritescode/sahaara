@@ -1,0 +1,58 @@
+name: sahaara
+description: "Sahaara — AI Safety Layer for Elderly Care"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State management & Routing
+  get: ^4.6.6
+
+  # Backend & Auth
+  supabase_flutter: ^2.8.3
+
+  # Location & Maps
+  google_maps_flutter: ^2.10.0
+  geolocator: ^13.0.2
+  geocoding: ^3.0.0
+  permission_handler: ^11.3.1
+
+  # Media
+  cloudinary_public: ^0.23.1
+  image_picker: ^1.1.2
+
+  # Notifications
+  flutter_local_notifications: ^18.0.1
+
+  # Legacy UI & Tasks dependencies
+  google_fonts: ^6.2.1
+  date_picker_timeline: ^1.2.6
+  day_night_time_picker: ^1.3.1
+  font_awesome_flutter: ^10.8.0
+  country_picker: ^2.0.26
+  country_code_picker: ^3.0.0
+
+  # Utilities
+  flutter_dotenv: ^5.2.1
+  intl: ^0.20.2
+  uuid: ^4.5.1
+  logger: ^2.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - .env
