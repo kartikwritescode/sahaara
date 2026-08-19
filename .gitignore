@@ -42,6 +42,7 @@ app.*.map.json
 # Secrets & Environment Configuration (Do Not Upload)
 /android/app/src/main/res/values/secrets.xml
 /lib/app/utils/constants.dart
+lib/app/core/constants/constants.dart
 *.env
 .env
 google-services.json
